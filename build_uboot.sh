@@ -1,4 +1,5 @@
 #!/bin/bash
+# Build u-boot from u-boot-xlnx and copy .elf file to build folder
 
 USER_DEFCONFIG=$1
 UBOOT_DIR=/opt/u-boot-xlnx

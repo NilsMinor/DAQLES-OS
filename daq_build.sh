@@ -1,10 +1,13 @@
 #!/bin/bash
+# Main script to control sub-scripts
+
 echo Build system
 INSTRUCTION="$1"
 
-SCRIPTS=/opt/scripts
-BUILD=/opt/build/
-FPGA=/opt/fpga_hw/
+# folder structure
+SCRIPTS=/opt/zynq_scripts
+BUILD=/opt/build
+FPGA=/opt/fpga_hw
 CONFIG=/opt/config
 
 # Scripts in script folder:
@@ -14,12 +17,18 @@ CONFIG=/opt/config
 # 	build_uboot.sh				: build uboot based on ??? _defconfig
 #	build_bin.sh				: build BOOT.bin based on *.hdf, u-boot.elf system_top.bit
 
-
-
-# all :	- Copy fpga hw files to build
-#	- Build u-boot-elf and copy to build
-#       - Build BOOT.bin
+# Commands
 #
+# all		 :	- Copy fpga hw files to build
+#			- Build u-boot-elf and copy to build
+#       		- Build BOOT.bin
+# serial	:	- open rxvt with screen on USB0
+# clean		:	- clean build folder
+# uboot		: 	- build u-boot with config/uboot_defconfig
+# bootbin	:	- build boot.bin from .hdf and uboot.elf from build folder
+# loadSD	:	- load files from build folder to SD-Card (change SD-card name inside script)
+#
+
 
 if [ "$INSTRUCTION" == "all" ]; then
 	echo "Build all"
@@ -28,17 +37,15 @@ if [ "$INSTRUCTION" == "all" ]; then
 	# Build u-boot-elf and copy to build
 	$SCRIPTS/build_uboot.sh $CONFIG/uboot_defconfig
 	# Build BOOT.bin
-	pushd $BUILD
+	pushd $BUILD/
 	$SCRIPTS/build_bin.sh *.hdf *.elf system_top.bit
 	popd
 elif [ "$INSTRUCTION" == "clean" ]; then
-       	pushd $BUILD
-	rm -r ../build/*
-	popd
-elif [ "$INSTRUCTION" == "boot_bin" ]; then
+	rm -r $BUILD/*
+elif [ "$INSTRUCTION" == "bootbin" ]; then
 	echo "Build BOOT.bin"
 	# Build BOOT.bin
-        pushd $BUILD
+        pushd $BUILD/
         $SCRIPTS/build_bin.sh *.hdf *.elf system_top.bit
         popd
 elif [ "$INSTRUCTION" == "uboot" ]; then

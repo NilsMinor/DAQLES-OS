@@ -1,4 +1,6 @@
 #!/bin/bash
+# Build a BOOT.bin from the files *.hdf, *uboot.elf 
+
 set -ex
 
 HDF_FILE=$1

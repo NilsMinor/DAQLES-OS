@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copy all files to SD Card
-# tar old files to archiv folder
+# tar old files to archiv folder with timestamp
 # remove old files
 
 BUILD_DIR=/opt/build/
