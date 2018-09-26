@@ -1,6 +1,7 @@
 
 Folder Structure:
 
+```bash
 /opt 
  ├──
  ├── build	  (target build folder)
@@ -12,3 +13,4 @@ Folder Structure:
  ├── u-boot-xlnx  (u-boot directory)
  ├── Xilinx	  (directory of xilinx tools like vivado and sdk (hsi))
  ├── zynq_scripts (scripts to build everything)	
+```
