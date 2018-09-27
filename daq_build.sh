@@ -9,6 +9,7 @@ SCRIPTS=/opt/zynq_scripts
 BUILD=/opt/build
 FPGA=/opt/fpga_hw
 CONFIG=/opt/config
+LINUX_DIR=/opt/linux-adi
 
 # Scripts in script folder:
 # 	copy_files_to_SD_card.sh		: Copy all files from build dir to SD Card
@@ -27,7 +28,7 @@ CONFIG=/opt/config
 # uboot		: 	- build u-boot with config/uboot_defconfig
 # bootbin	:	- build boot.bin from .hdf and uboot.elf from build folder
 # loadSD	:	- load files from build folder to SD-Card (change SD-card name inside script)
-#
+# kernel	: 	- build linux kernel (linux-adi) with config/linux_config
 
 
 if [ "$INSTRUCTION" == "all" ]; then
@@ -57,6 +58,9 @@ elif [ "$INSTRUCTION" == "serial" ]; then
 elif [ "$INSTRUCTION" == "loadSD" ]; then
  	# Load files to SD Card
 	$SCRIPTS/copy_files_to_SD_card.sh
+elif [ "$INSTRUCTION" == "kernel" ]; then
+        echo "Build linux-adi"
+	$SCRIPTS/build_zynq_kernel_image.sh  
 else
 	echo "Instruction > $1 < not supported"
 fi
