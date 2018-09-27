@@ -7,16 +7,14 @@ INSTRUCTION="$1"
 filename=$(basename -- "$1")
 filename="${filename%.*}"
 
-echo "$filename _ $extension "
-
 if [[ $1 == *.dtb ]] 
 then
 	echo "convert dtb > dts"	
-	dtc -I dtb -O dts -o "$filename.dts" $1 
+	dtc -I dtb -O dts -o $1 "$filename.dts" 
 
 else
 	echo "convert dts > dtb"
-	dtc -I dts -O dtb -o $1 "$filename.dts"
+	dtc -I dts -O dtb -o "$filename.dtb" $1
 fi
 
 
