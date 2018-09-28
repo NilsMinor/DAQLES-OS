@@ -25,17 +25,17 @@ pushd $TARGET_DIR
 	echo "build devicetree"
 	cd $BUILD_DIR
         xsdk -batch -source create_dt.tcl
-	cp $filename $TARGET_DIR/
-	rm -r $BUILD_DIR
+	mv $filename $TARGET_DIR/
+	rm -r $TARGET_DIR/$BUILD_DIR
 popd
 
-elif [[$1 = *.dtb]] 
+elif [[ $1 = *.dtb ]] 
 then
-	echo "convert dtb > dts"
+	echo "convert dtb > dts for file $1"
 	dtc -I dtb -O dts -o $1 "$filename.dts" 
 
 else
-	echo "convert dts > dtb"
+	echo "convert dts > dtb for file $1"
 	dtc -I dts -O dtb -o "$filename.dtb" $1
 fi
 

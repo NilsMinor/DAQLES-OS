@@ -18,7 +18,8 @@ ls -la
 if [ -d "$SD_DIR" ]; then
 #	cp -v uImage "$SD_DIR" 
 	cp -v *.BIN "$SD_DIR"
-	cp -v uEnv.txt "SD_DIR"
+	cp -v uEnv.txt "$SD_DIR"
+	cp -v *.dtb "$SD_DIR" 
 	sync
 # Archive files
 pushd ..
