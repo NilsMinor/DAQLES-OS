@@ -1,5 +1,13 @@
 #!/bin/bash
-# Build u-boot from u-boot-xlnx and copy .elf file to build folder
+#
+# Nils Minor 09/2018 project [ DAQLES ]
+#
+# Build u-boot from u-boot-xlnx directory  and copy .elf file to build folder
+#
+# input files 	:
+# output files 	:
+#
+#
 
 USER_DEFCONFIG=$1
 UBOOT_DIR=/opt/u-boot-xlnx

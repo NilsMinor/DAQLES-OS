@@ -1,7 +1,15 @@
 #!/bin/bash
-# Copy all files to SD Card
-# tar old files to archiv folder with timestamp
-# remove old files
+#
+# Nils Minor 09/2018 project [ DAQLES ]
+#
+# Script to copy necessar files from build folder to SD Card,
+# tar old files to and move them to archiv folder with timestamp
+# also removes cleans build folder
+#
+# input files	:
+# output files	:
+#
+
 
 BUILD_DIR=/opt/build
 CONFIG_DIR=/opt/config

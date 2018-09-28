@@ -1,5 +1,18 @@
 #!/bin/bash
-# Tool to build/rebuild devicetree
+#
+# Nils Minor 09/2018 project [ DAQLES ]
+#
+# Script to build or rebuild the devicetree depending on the committed file
+#
+# input files	: [1] *.dts or *.dtb or *.hdf
+# output files	: [1] *.dts or *.dtb or *.hdf
+#
+# The script generates the following output
+# input (*.dts) > output (*.dtb) build devicetree blob
+# input (*.dtb) > output (*.dts) rebuild devicetree from blob
+# input (*.hdf) > output (*.dts) build device tree from hardware
+#
+
 
 INSTRUCTION="$1"
 BUILD_DIR=build_devicetree

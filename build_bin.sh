@@ -1,23 +1,28 @@
 #!/bin/bash
-# Build a BOOT.bin from the files *.hdf, *uboot.elf 
+#
+# Nils Minor 09/2018 project [ DAQLES ]
+#
+# Script to build BOOT.bin from HDF and uboot. Bitstream must be included inside HDF.
+# Script is based on wiki-scripts build script from Analog Devices
+#
+# input files  	: [1] FPGA HW Description (*.hdf)
+#		: [2] UBOOT executable file (*.elf)
+# output files	:     BOOT.bin=[FSBL+uBoot+bitstream] > build/
+#
 
 set -ex
-
 HDF_FILE=$1
 UBOOT_FILE=$2
 BITSTREAM_FILE=$3
+
+
+# Directories
 BUILD_DIR=build_boot_bin
 OUTPUT_DIR=output_boot_bin
 TARGET_DIR=/opt/build
 
 usage () {
 	echo usage: $0 system_top.hdf u-boot.elf bitstream.bit [output-archive]
-	exit 1
-}
-
-depends () {
-	echo Xilinx $1 must be installed and in your PATH
-	echo try: source /opt/Xilinx/Vivado/2017.4/settings64.sh
 	exit 1
 }
 
@@ -82,7 +87,3 @@ cp $BUILD_DIR/build/sdk/hw_0/system_top.bit $OUTPUT_DIR/system_top.bit
 	cp BOOT.BIN $TARGET_DIR/
 )
 
-### Optionally tar.gz the entire output folder with the name given in argument 3
-if [ ${#4} -ne 0 ]; then
-	tar czvf $4.tar.gz $OUTPUT_DIR
-fi
