@@ -3,6 +3,7 @@
 
 echo Build system
 INSTRUCTION="$1"
+PARAMETER="$2"
 
 # folder structure
 SCRIPTS=/opt/zynq_scripts
@@ -20,7 +21,7 @@ LINUX_DIR=/opt/linux-adi
 
 # Commands
 #
-# all		 :	- Copy fpga hw files to build
+# all		:	- Copy fpga hw files to build
 #			- Build u-boot-elf and copy to build
 #       		- Build BOOT.bin
 # serial	:	- open rxvt with screen on USB0
@@ -29,7 +30,9 @@ LINUX_DIR=/opt/linux-adi
 # bootbin	:	- build boot.bin from .hdf and uboot.elf from build folder
 # loadSD	:	- load files from build folder to SD-Card (change SD-card name inside script)
 # kernel	: 	- build linux kernel (linux-adi) with config/linux_config
-
+# devicetree	:	- build dts from hdf (parameter = .hdf)
+#			- build dts from dtb (parameter = .dtb)
+#			- rebuild dtb from dts (parameter = .dtb)
 
 if [ "$INSTRUCTION" == "all" ]; then
 	echo "Build all"
