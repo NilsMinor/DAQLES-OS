@@ -63,10 +63,11 @@ echo "Building $IMG_NAME done"
 #	DTFILE=$DTDEFAULT
 #fi
 
+# copy uImage to build/
+cp -f $LINUX_DIR/arch/$ARCH/boot/$IMG_NAME $BUILD_DIR/
 
 
 # For building dtb
-#cp -f $LINUX_DIR/arch/$ARCH/boot/$IMG_NAME $BUILD_DIR/
 #cp -f $LINUX_DIR/arch/$ARCH/boot/dts/$DTFILE $BUILD_DIR/
 
 

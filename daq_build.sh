@@ -22,8 +22,10 @@ CONFIG_DIR=/opt/config
 # Commands
 #
 # all		:	- Copy fpga hw files to build
-#			- Build u-boot-elf and copy to build
+#			- #Build u-boot-elf and copy to build
 #       		- Build BOOT.bin
+#			- build devicetree
+#			- build uImage
 # serial	:	- open rxvt with screen on USB0
 # clean		:	- clean build folder
 # uboot		: 	- build u-boot with config/uboot_defconfig
@@ -57,27 +59,32 @@ fi
 
 if [ "$INSTRUCTION" == "all" ]; then
 
-	echo "Build all"
+	echo "build all"
+	# clean build folder
+	$SCRIPTS_DIR/clean_build.sh
 	# Copy fpga hw files to build
-	$SCRIPTS_DIR/copy_fpga_hw_to_build.sh 
+	$SCRIPTS_DIR/copy_fpga_hw_to_build.sh
 	# Build u-boot-elf and copy to build
-	$SCRIPTS_DIR/build_uboot.sh $CONFIG_DIR/uboot_defconfig
-	# Build BOOT.bin
+	#$SCRIPTS_DIR/build_uboot.sh $CONFIG_DIR/uboot_defconfig
 	pushd $BUILD_DIR/
-	$SCRIPTS_DIR/build_bin.sh *.hdf *.elf system_top.bit
+          # Build BOOT.bin
+	  $SCRIPTS_DIR/build_bin.sh *.hdf *.elf system_top.bit
+	  # Build Devicetree
+  	  $SCRIPTS_DIR/build_devicetree.sh *.hdf
+	  # Build uImage
+	  $SCRIPTS_DIR/build_zynq_kernel_image.sh
 	popd
 
 elif [ "$INSTRUCTION" == "clean" ]; then
 	pushd $BUILD_DIR
-	cd ..
-	rm -r build/*
+	  $SCRIPTS_DIR/clean_build.sh
 	popd
 elif [ "$INSTRUCTION" == "bootbin" ]; then
 
 	# Build BOOT.bin
 	echo "Build BOOT.bin"
         pushd $BUILD_DIR/
-        $SCRIPTS_DIR/build_bin.sh *.hdf *.elf system_top.bit
+          $SCRIPTS_DIR/build_bin.sh *.hdf *.elf
         popd
 
 elif [ "$INSTRUCTION" == "uboot" ]; then

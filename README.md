@@ -7,6 +7,13 @@ Some files are based on scripts from ADI (https://github.com/analogdevicesinc/wi
 
 My development-flow and my scripts depend on the folder structure which looks like this:
 
+Following tools needs to be installed and must be part of the $PATH in order to run them inside the scripts
+- xsdk
+- dtc
+- make 
+- hsi
+
+
 Folder Structure:
 
 ```bash
