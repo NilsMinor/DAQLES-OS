@@ -71,8 +71,11 @@ if [ "$INSTRUCTION" == "all" ]; then
 	  $SCRIPTS_DIR/build_bin.sh *.hdf *.elf system_top.bit
 	  # Build Devicetree
   	  $SCRIPTS_DIR/build_devicetree.sh *.hdf
-	  # Build uImage
-	  $SCRIPTS_DIR/build_zynq_kernel_image.sh
+	  $SCRIPTS_DIR/build_devicetree.sh $BUILD_DIR/system_top/system-top.dts
+	  # rename and move devicetree to build folder
+          mv -v $BUILD_DIR/system-top.dtb $BUILD_DIR/devicetree.dtb
+	  # Build uImage (use xilinx_zynq_defconfig)
+	  $SCRIPTS_DIR/build_zynq_kernel_image.sh $CONFIG_DIR/xilinx_zynq_defconfig
 	popd
 
 elif [ "$INSTRUCTION" == "clean" ]; then

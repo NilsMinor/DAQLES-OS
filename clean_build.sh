@@ -9,8 +9,10 @@ TARGET_DIR=/opt/build
 
 pushd $TARGET_DIR
 	echo "clean build folder"
-        rm -v -r system_top/
-        rm -v uImage
+        rm -r -v system_top/
+        rm -r -v build_boot_bin/
+	rm -r -v output_boot_bin
+  	rm -v uImage
         rm -v *.hdf
 	rm -v *.dtb
 	rm -v BOOT.BIN
