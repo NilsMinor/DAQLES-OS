@@ -12,7 +12,8 @@ Following tools needs to be installed and must be part of the $PATH in order to 
 - dtc
 - make 
 - hsi
-
+- arm-linux-gnueabi-gcc (to build the kernel)
+- u-boot-tools to have mkimage (to build uImage from zImage)
 
 Folder Structure:
 
@@ -20,7 +21,7 @@ Folder Structure:
 /opt 
  ├──
  ├── build	  	(target build folder)
- ├── config       	(folder for defconfig for uboot and linux)
+ ├── config       	(folder for defconfig of uboot and linux)
  ├── device-tree-xlnx   (Linux device tree generator for the Xilinx SDK (Vivado > 2014.1))
  ├── fpga_hw	  	(folder for fpga files like .bit and .hdf)
  ├── linux-adi    	(linux kernel directory) 
