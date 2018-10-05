@@ -14,7 +14,7 @@ CONFIG_DIR=/opt/config
 # Scripts in script folder:
 # 	copy_files_to_SD_card.sh		: Copy all files from build dir to SD Card
 #	copy_fpga_hw_to_build.sh		: Copy hw files from fpga_hw to build dir
-#	build_zynq_kernel_image.sh		: build linux kernel based on ????_defconfig
+#	build_kernel.sh				: build linux kernel based on ????_defconfig
 # 	build_uboot.sh				: build uboot based on ??? _defconfig
 #	build_bin.sh				: build BOOT.bin based on *.hdf, u-boot.elf system_top.bit
 #	build_devicetree.sh			: build dts or dtb, depends on input file (.hdf/ .dts/ .dtb)
@@ -75,7 +75,7 @@ if [ "$INSTRUCTION" == "all" ]; then
 	  # rename and move devicetree to build folder
           mv -v $BUILD_DIR/system-top.dtb $BUILD_DIR/devicetree.dtb
 	  # Build uImage (use xilinx_zynq_defconfig)
-	  $SCRIPTS_DIR/build_zynq_kernel_image.sh $CONFIG_DIR/xilinx_zynq_defconfig
+	  $SCRIPTS_DIR/build_kernel.sh $CONFIG_DIR/xilinx_zynq_defconfig
 	popd
 
 elif [ "$INSTRUCTION" == "clean" ]; then
