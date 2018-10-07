@@ -13,7 +13,6 @@
 set -ex
 HDF_FILE=$1
 UBOOT_FILE=$2
-BITSTREAM_FILE=$3
 
 
 # Directories
