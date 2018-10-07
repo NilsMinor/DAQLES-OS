@@ -4,10 +4,10 @@
 #
 # Build u-boot from u-boot-xlnx directory  and copy .elf file to build folder
 #
-# input files 	:
+# input files 	: [1] custom defconfig
 # output files 	:
 #
-#
+
 
 USER_DEFCONFIG=$1
 UBOOT_DIR=/opt/u-boot-xlnx
