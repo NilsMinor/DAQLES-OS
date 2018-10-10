@@ -13,10 +13,11 @@
 
 set -e
 
-CUSTOM_DEFCONFIG=$1
+LINUX_DIR=$1
+CUSTOM_DEFCONFIG=$2
+
 
 BUILD_DIR=/opt/build
-LINUX_DIR=/opt/linux-adi
 CONFIG_DIR=/opt/config
 NUM_JOBS=7
 DEFCONFIG=linux_defconfig 
@@ -29,7 +30,8 @@ if [ -z  "$CUSTOM_DEFCONFIG" ] ; then
 	cp -v $CONFIG_DIR/linux_defconfig $LINUX_DIR/arch/arm/configs/
 else
   # TODO fix custom defconfig error, use now xilinx_zynq ...
-  DEFCONFIG=xilinx_zynq_defconfig
+  #DEFCONFIG=xilinx_zynq_defconfig
+  DEFCONFIG=$CUSTOM_DEFCONFIG  
   # Copy custom defconfig to linux-adi/confgis/
 	echo "copy $DEFCONFIG to linux-dir" 
   if [ -e  "$CONFIG_DIR/$DEFCONFIG" ] ; then

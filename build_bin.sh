@@ -14,7 +14,6 @@ set -ex
 HDF_FILE=$1
 UBOOT_FILE=$2
 
-
 # Directories
 BUILD_DIR=build_boot_bin
 OUTPUT_DIR=output_boot_bin
