@@ -11,10 +11,13 @@ TARGET_DIR=/opt/build
 FPGA_HW_DIR=/opt/fpga_hw
 ARCHIVE_DIR=/opt/archive
 DTX_DIR=/opt/device-tree-xlnx
+DT_FILE=$(TARGET_DIR)/devicetree/system-top.dts
+DTS_DAQLES=$(TARGET_DIR)/dts_daqles
 
 
 # File definitions
 HDF_NAME=system_top
+DTS_NAME=system-top
 
 # linux
 NUM_JOBS=7
@@ -22,7 +25,6 @@ CROSS_COMPILE=arm-linux-gnueabi-
 ZYNQ_TYPE=zynq
 IMG_NAME=uImage
 LINUX_CONFIG=xilinx_zynq_defconfig
-
 
 # common
 timestamp := `/bin/date "+%Y-%m-%d-%H-%M-%S"`
@@ -55,7 +57,7 @@ prepare:
 	@echo "Copy hdf design to build folder"
 	@[ -d "$(TARGET_DIR)" ] || mkdir -v $(TARGET_DIR)
 	@cp -v $(FPGA_HW_DIR)/$(HDF_NAME).hdf $(TARGET_DIR)
-
+	@cp -v $(CONFIG_DIR)/uEnv.txt $(TARGET_DIR)
 u-boot:
 	@echo "Build u-boot, use old u-boot.elf file"
 	cp -v $(CONFIG_DIR)/u-boot.elf $(TARGET_DIR)/
@@ -87,20 +89,33 @@ hdf-to-dts: prepare
 	@echo "Created dts files in folder $(TARGET_DIR)/devicetree, ready to  manipulate"
 
 dtb-to-dts:
-	@echo "Rebuild devicetree from file $(param1)"
-	@[ -f "$(param1)" ] || (echo "Sorry, you need to pass a valid devicetree blob" && exit 1)
-	@dtc -I dtb -O dts -o $(TARGET_DIR)/devicetree.dts $(param1) 
+	#DT_FILE=$(TARGET_DIR)/devicetree.dtb
+	@echo "Rebuild devicetree from file $(DT_FILE)"
+	@[ -f "$(DT_FILE)" ] || (echo "Sorry, you need to pass a valid devicetree blob" && exit 1)
+	@dtc -I dtb -O dts -o $(TARGET_DIR)/devicetree.dts $(DT_FILE)
 
 
 dts-to-dtb:
-	@echo "Build devicetree from file $(param1)"
-	@[ -f "$(param1)" ] || (echo "Sorry, you need to pass a valid devicetree " && exit 1)
-	@dtc -I dts -O dtb -o $(TARGET_DIR)/devicetree.dtb $(param1)
+	#DT_FILE=$(TARGET_DIR)/devicetree.dts
+	@echo "Build devicetree from file $(DT_FILE)"
+	@[ -f "$(DT_FILE)" ] || (echo "Sorry, you need to pass a valid devicetree " && exit 1)
+	@dtc -I dts -O dtb -o $(TARGET_DIR)/devicetree.dtb $(DT_FILE)
+	@echo "Build devicetree blob $(TARGET_DIR)/$(DTS_NAME).dts"
 
+dts-linux:
+	# build/system_top.hdf -> [hdf-to-dts] -> build/devicetree	
+	# cp build/devicetree/* -> /build/dts_daqles by hand! modify it here
+	# cp /build/dts_daqles -> linux/arch/arm/boot/dts/
+	@echo "Build devicetree from file $(DTS_DAQLES)/"
+	@if [ ! -d "$(DTS_DAQLES)/" ]; then (echo "Sorry, no $(DTS_DAQLES)/ path was found" && exit 1); fi
+	cp -v $(DTS_DAQLES)/* $(LINUX_DIR)/arch/arm/boot/dts/
+	make -C $(LINUX_DIR) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) $(DTS_NAME).dtb
+	@[ -f "$(LINUX_DIR)/arch/arm/boot/dts/$(DTS_NAME).dtb" ] || (echo "No $(DTS_NAME).dtb found in $(LINUX_DIR)/arch/arm/boot/dts/" && exit 1)
+	mv $(LINUX_DIR)/arch/arm/boot/dts/$(DTS_NAME).dtb $(TARGET_DIR)/devicetree.dtb
 
-clean:
-	@echo "Clean build folder"
-	@if [ -d "$(TARGET_DIR)" ]; then rm -rf -v $(TARGET_DIR); fi
+#clean:
+#	@echo "Clean build folder"
+#	@if [ -d "$(TARGET_DIR)" ]; then rm -rf -v $(TARGET_DIR); fi
 
 copy-to-SD:
 	@echo "Copy files to SD-Card"
