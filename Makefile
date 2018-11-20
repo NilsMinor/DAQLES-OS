@@ -2,7 +2,7 @@
 # Based on Tigralt's zynq-boot makefile >https://github.com/Tigralt/zynq-boot/blob/master/Makefile<
 
 # Directory definitions
-SD_DIR=/media/psf/NO\ NAME/
+SD_DIR=/media/psf/DAQLES
 SCRIPT_DIR=/opt/zynq_scripts
 UBOOT_DIR=/opt/u-boot-xlnx
 LINUX_DIR=/opt/linux-adi
@@ -25,6 +25,13 @@ CROSS_COMPILE=arm-linux-gnueabi-
 ZYNQ_TYPE=zynq
 IMG_NAME=uImage
 LINUX_CONFIG=xilinx_zynq_defconfig
+
+#SD card
+
+MOUNT?=sdb
+MOUNTED=`ls /dev | grep -c $(MOUNT)`
+
+
 
 # common
 timestamp := `/bin/date "+%Y-%m-%d-%H-%M-%S"`
@@ -123,6 +130,19 @@ copy-to-SD:
 	cp -v $(TARGET_DIR)/BOOT.BIN $(SD_DIR)
 	cp -v $(TARGET_DIR)/uEnv.txt $(SD_DIR)
 	cp -v $(TARGET_DIR)/devicetree.dtb $(SD_DIR)
+
+
+format.sdcard:
+	@[ $(MOUNTED) -gt 0 ] || (echo "SD card mount point '/dev/$(MOUNT)' not found. Is the sd card mounted?" && exit 1)
+	@echo "Root authorization is required in order to format sd card."
+	@echo "Verify that the sd card is not mounted, the format will fail otherwise!"
+	@sudo dd if=/dev/zero of=/dev/$(MOUNT) bs=1024 count=1
+	@echo "\nx\nh\n255\ns\n63\nr\nn\np\n1\n2048\n+200M\nn\np\n2\n\n\na\n1\nt\n1\nc\nt\n2\n83\nw\n" | sudo fdisk /dev/$(MOUNT)
+	@sudo mkfs.vfat -F 32 -n BOOT /dev/$(MOUNT)1
+	@sudo mkfs.ext4 -L root /dev/$(MOUNT)2
+	@echo "SD card format successful! You can know copy files from '$(SDCARD_DIR)/' to SD card."
+
+
 
 archive-old:
 	@echo "Archive old build files"

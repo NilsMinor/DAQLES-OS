@@ -76,7 +76,7 @@ echo '}' >> $OUTPUT_DIR/zynq.bif
 
 ### Copy fsbl and system_top.bit into the output folder
 cp $BUILD_DIR/build/sdk/fsbl/Release/fsbl.elf $OUTPUT_DIR/fsbl.elf
-cp $BUILD_DIR/build/sdk/hw_0/system_top.bit $OUTPUT_DIR/system_top.bit
+cp $BUILD_DIR/build/sdk/hw_0/*.bit $OUTPUT_DIR/system_top.bit
 
 ### Build BOOT.BIN
 (
