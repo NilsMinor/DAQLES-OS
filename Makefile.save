@@ -2,17 +2,16 @@
 # Based on Tigralt's zynq-boot makefile >https://github.com/Tigralt/zynq-boot/blob/master/Makefile<
 
 # Directory definitions
-
-DAQLES_DEV=~/daqles-dev
-SD_DIR=/media/psf/DAQLES
-SCRIPT_DIR=$(DAQLES_DEV)/daqles-scripts
-UBOOT_DIR=$(DAQLES_DEV)/u-boot-xlnx
-LINUX_DIR=$(DAQLES_DEV)/linux-adi
-CONFIG_DIR=$(DAQLES_DEV)/daqles-config
-TARGET_DIR=$(DAQLES_DEV)/build
-FPGA_HW_DIR=$(DAQLES_DEV)/fpga_hw
-ARCHIVE_DIR=$(DAQLES_DEV)/archive
-DTX_DIR=$(DAQLES_DEV)/device-tree-xlnx
+DAQLES_HOME=~/daqles-dev
+SD
+SCRIPT_DIR=/opt/daqles-scripts
+UBOOT_DIR=/opt/u-boot-xlnx
+LINUX_DIR=/opt/linux-adi
+CONFIG_DIR=/opt/config
+TARGET_DIR=/opt/build
+FPGA_HW_DIR=/opt/fpga_hw
+ARCHIVE_DIR=/opt/archive
+DTX_DIR=/opt/device-tree-xlnx
 DT_FILE=$(TARGET_DIR)/devicetree/system-top.dts
 DTS_DAQLES=$(TARGET_DIR)/dts_daqles
 
