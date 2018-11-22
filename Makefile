@@ -4,17 +4,18 @@
 # Directory definitions
 
 DAQLES_DEV=~/daqles-dev
+
 SD_DIR=/media/psf/DAQLES
-SCRIPT_DIR=$(DAQLES_DEV)/daqles-scripts
-UBOOT_DIR=$(DAQLES_DEV)/u-boot-xlnx
-LINUX_DIR=$(DAQLES_DEV)/linux-adi
-CONFIG_DIR=$(DAQLES_DEV)/daqles-config
-TARGET_DIR=$(DAQLES_DEV)/build
-FPGA_HW_DIR=$(DAQLES_DEV)/fpga_hw
-ARCHIVE_DIR=$(DAQLES_DEV)/archive
-DTX_DIR=$(DAQLES_DEV)/device-tree-xlnx
+SCRIPT_DIR=../daqles-scripts
+UBOOT_DIR=../u-boot-xlnx
+LINUX_DIR=../linux
+CONFIG_DIR=../daqles-config
+TARGET_DIR=../build
+FPGA_HW_DIR=../fpga_hw
+ARCHIVE_DIR=../archive
+DTX_DIR=../device-tree-xlnx
 DT_FILE=$(TARGET_DIR)/devicetree/system-top.dts
-DTS_DAQLES=$(TARGET_DIR)/dts_daqles
+DTS_DAQLES=../daqles-dts
 
 
 # File definitions
@@ -32,8 +33,6 @@ LINUX_CONFIG=xilinx_zynq_defconfig
 
 MOUNT?=sdb
 MOUNTED=`ls /dev | grep -c $(MOUNT)`
-
-
 
 # common
 timestamp := `/bin/date "+%Y-%m-%d-%H-%M-%S"`
@@ -112,7 +111,7 @@ dts-to-dtb:
 	@echo "Build devicetree blob $(TARGET_DIR)/$(DTS_NAME).dts"
 
 dts-linux:
-	# build/system_top.hdf -> [hdf-to-dts] -> build/devicetree	
+	# build devicetree source from hardware description file -> [hdf-to-dts] 	
 	# cp build/devicetree/* -> /build/dts_daqles by hand! modify it here
 	# cp /build/dts_daqles -> linux/arch/arm/boot/dts/
 	@echo "Build devicetree from file $(DTS_DAQLES)/"
